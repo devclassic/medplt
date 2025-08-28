@@ -51,6 +51,7 @@
 
 <script setup>
   const route = useRoute()
+  useClientInit()
 </script>
 
 <style scoped>
@@ -115,6 +116,8 @@
     bottom: 30px;
     left: 30px;
     cursor: pointer;
+    font-size: 16px;
+    color: #092643;
   }
 
   .logout span {

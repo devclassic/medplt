@@ -4,9 +4,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
-  useClientInit()
-</script>
+<script setup></script>
 
 <style>
   * {
