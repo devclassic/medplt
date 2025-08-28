@@ -51,6 +51,7 @@
 
 <script setup>
   const route = useRoute()
+  
   useClientInit()
 </script>
 
