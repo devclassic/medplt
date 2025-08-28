@@ -1,25 +1,11 @@
 <template>
-  <NuxtLayout :name="state.layout">
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup>
-  const state = reactive({
-    layout: 'main',
-  })
-
   useClientInit()
-
-  const route = useRoute()
-
-  watchEffect(() => {
-    if (route.path === '/' || route.path === '/login') {
-      state.layout = 'empty'
-    } else {
-      state.layout = 'main'
-    }
-  })
 </script>
 
 <style>

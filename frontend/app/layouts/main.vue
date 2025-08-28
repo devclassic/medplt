@@ -150,10 +150,6 @@
     background: url('@/assets/images/side-icon-user.png') no-repeat center center / 100% 100%;
   }
 
-  .menu-item.active .icon.icon-home {
-    background: url('@/assets/images/side-icon-home-active.png') no-repeat center center / 100% 100%;
-  }
-
   .menu-item.active .icon.icon-speech {
     background: url('@/assets/images/side-icon-speech-active.png') no-repeat center center / 100%
       100%;
