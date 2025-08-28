@@ -3,16 +3,16 @@
     <div class="center">
       <div class="title">端点AI医疗数字平台</div>
       <div class="link-box">
-        <NuxtLink to="/speech">
+        <NuxtLink>
           <img src="@/assets/images/index-link-1.png" />
         </NuxtLink>
-        <NuxtLink to="/check">
+        <NuxtLink>
           <img src="@/assets/images/index-link-2.png" />
         </NuxtLink>
-        <NuxtLink to="/chat">
+        <NuxtLink>
           <img src="@/assets/images/index-link-3.png" />
         </NuxtLink>
-        <NuxtLink to="/image">
+        <NuxtLink>
           <img src="@/assets/images/index-link-4.png" />
         </NuxtLink>
       </div>
