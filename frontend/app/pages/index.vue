@@ -3,16 +3,16 @@
     <div class="center">
       <div class="title">端点AI医疗数字平台</div>
       <div class="link-box">
-        <NuxtLink>
+        <NuxtLink to="/speech">
           <img src="@/assets/images/index-link-1.png" />
         </NuxtLink>
-        <NuxtLink>
+        <NuxtLink to="/check">
           <img src="@/assets/images/index-link-2.png" />
         </NuxtLink>
-        <NuxtLink>
+        <NuxtLink to="/chat">
           <img src="@/assets/images/index-link-3.png" />
         </NuxtLink>
-        <NuxtLink>
+        <NuxtLink to="/image">
           <img src="@/assets/images/index-link-4.png" />
         </NuxtLink>
       </div>
@@ -24,7 +24,7 @@
 
 <style scoped>
   .box {
-    width: 100%;
+    width: 1920px;
     height: 100%;
     background: url('@/assets/images/index-bg.png') no-repeat center center / 100% 100%;
     position: fixed;

@@ -40,10 +40,11 @@
 
 <style scoped>
   .box {
-    width: 100%;
+    width: 1920px;
     height: 100%;
     position: fixed;
     display: flex;
+    overflow: auto;
   }
 
   .left {

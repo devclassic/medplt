@@ -9,6 +9,8 @@
     layout: 'main',
   })
 
+  useClientInit()
+
   const route = useRoute()
 
   watchEffect(() => {
