@@ -1,11 +1,11 @@
 <template>
-  <div class="box">
+  <div spellcheck="false" class="box">
     <div class="left"></div>
     <div class="right">
       <div class="login-box">
         <div class="title">端点AI医疗数字平台</div>
         <div class="form">
-          <div spellcheck="false" class="input-box">
+          <div class="input-box">
             <div class="label">
               <span class="icon icon-user"></span>
               <span>账号</span>

@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div spellcheck="false" class="box">
     <div class="side">
       <div class="side-box">
         <div>
@@ -51,7 +51,7 @@
 
 <script setup>
   const route = useRoute()
-  
+
   useClientInit()
 </script>
 

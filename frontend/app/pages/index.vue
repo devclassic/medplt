@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div spellcheck="false" class="box">
     <div class="center">
       <div class="title">端点AI医疗数字平台</div>
       <div class="link-box">

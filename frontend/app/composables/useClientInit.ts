@@ -1,5 +1,3 @@
-import { useWindowSize } from '@vueuse/core'
-
 export const useClientInit = () => {
   onMounted(() => {
     const { width } = useWindowSize()
