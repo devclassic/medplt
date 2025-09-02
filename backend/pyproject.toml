@@ -6,7 +6,9 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi[all]>=0.116.1",
+    "huggingface-hub>=0.34.4",
     "invoke>=2.2.0",
+    "modelscope>=1.29.1",
 ]
 
 [tool.uv.sources]
