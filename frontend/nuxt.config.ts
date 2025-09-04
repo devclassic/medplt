@@ -8,4 +8,9 @@ export default defineNuxtConfig({
     importStyle: 'css',
     defaultLocale: 'zh-cn',
   },
+  runtimeConfig: {
+    public: {
+      BASE_URL: import.meta.env.BASE_URL,
+    },
+  },
 })

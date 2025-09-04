@@ -2,128 +2,7 @@
   <div class="wrap">
     <div class="title">多人语音</div>
     <div class="top-box">
-      <div class="result">
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-        测试文章测试文章测试文章测试文章测试文章测试文章测试
-        <br />
-        文章测试文章测试文章测试文章测试文章测试文章测试文章
-        <br />
-      </div>
+      <div ref="result" v-html="state.result" class="result"></div>
     </div>
     <div class="bottom-box">
       <div class="input-box">
@@ -131,11 +10,11 @@
           <div>
             <div @click="state.showType = !state.showType" class="type"></div>
             <div v-show="state.showType" class="type-list">
-              <div class="item">
+              <div @click="typeMR" class="item">
                 <div class="icon icon-mr"></div>
                 <div class="text">病历生成</div>
               </div>
-              <div class="item">
+              <div @click="typeCustom" class="item">
                 <div class="icon icon-custom"></div>
                 <div class="text">自定义</div>
               </div>
@@ -146,92 +25,209 @@
             </div>
           </div>
           <div class="right">
-            <div class="status">正在录音...</div>
-            <div class="speech"></div>
-            <div class="clean"></div>
+            <div class="status">{{ state.status }}</div>
+            <div @click="asr" class="speech"></div>
+            <div @click="clean" class="clean"></div>
           </div>
         </div>
-        <textarea placeholder="请输入对话生成提示词，对话内容为<对话>" class="input"></textarea>
+        <textarea placeholder="请输入对话生成提示词，对话内容为<对话>" class="input">{{
+          state.prompt
+        }}</textarea>
         <div class="bottom">
-          <div class="submit"></div>
+          <div @click="submit" class="submit"></div>
         </div>
       </div>
       <div class="speech-box">
         <div class="toolbar">
-          <div class="rename"></div>
+          <div @click="showRename" class="rename"></div>
         </div>
         <div class="speech-list">
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
-          </div>
-          <div class="item">
-            <span class="name">说话人0：</span>
-            <span class="content">你是谁</span>
+          <div v-for="item of state.speechItems" class="item">
+            <span class="name">{{ item.name }}：</span>
+            <span class="content">{{ item.text }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <el-dialog v-model="state.showRename" title="命名说话人" width="500">
+    <el-form label-width="auto">
+      <el-form-item v-for="(name, i) in state.names" :label="name" :key="i">
+        <el-input v-model="state.nameValues[i]" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="state.showRename = false">取消</el-button>
+        <el-button type="primary" @click="rename">确定</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
+  import { fetchEventSource } from '@microsoft/fetch-event-source'
+  import markdownit from 'markdown-it'
+
   const state = reactive({
     showType: false,
+    showRename: false,
+    status: '',
+    prompt: '',
+    names: [],
+    nameValues: [],
+    speechItems: [],
+    result: '',
+    resultRef: useTemplateRef('result'),
   })
+
+  const dialog = () => {
+    let text = ''
+    state.speechItems.forEach(item => {
+      text += `${item.name}：${item.text}\n`
+    })
+    return `<对话>${text}</对话>`
+  }
+
+  const typeMR = () => {
+    state.prompt = '请根据<对话>生成一份完整的病例'
+    state.showType = false
+  }
+
+  const typeCustom = () => {
+    state.prompt = ''
+    state.showType = false
+  }
+
+  let recording = false
+  const recorder = useRecorder()
+  const asr = async () => {
+    if (!recording) {
+      state.status = recorder.start(
+        () => {
+          state.status = '录音中...'
+          recording = true
+        },
+        () => {
+          state.status = '录音失败...'
+          recording = false
+        }
+      )
+    } else {
+      state.status = '生成对话...'
+      const res = await recorder.getResult()
+      const items = res.data[0]?.sentence_info
+      if (items) {
+        state.speechItems = items.map(item => ({
+          name: `说话人${item.spk}`,
+          spk: item.spk,
+          text: item.text,
+        }))
+      }
+      state.status = ''
+      recording = false
+    }
+  }
+
+  const showRename = () => {
+    state.names = [...new Set(state.speechItems.map(item => item.name))]
+    state.showRename = true
+  }
+
+  const rename = () => {
+    state.speechItems.forEach(item => {
+      item.name = state.nameValues[state.names.indexOf(item.name)]
+    })
+    state.showRename = false
+  }
+
+  const md = markdownit()
+  const config = useRuntimeConfig()
+  const submit = async () => {
+    if (!state.prompt) {
+      ElMessage.error('请输入对话生成提示词')
+      return
+    }
+    state.status = '生成中...'
+    const prompt = `${dialog()}\n${state.prompt}`
+    const url = config.public.BASE_URL + '/api/client/asr/generate'
+    const ctrl = new AbortController()
+    let result = ''
+    await fetchEventSource(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+      signal: ctrl.signal,
+      async onopen(e) {
+        if (e.ok && e.headers.get('content-type')?.includes('text/event-stream')) {
+          console.log('✅ SSE opened')
+        } else {
+          throw new Error(await e.text())
+        }
+      },
+      async onmessage(e) {
+        try {
+          const chunk = JSON.parse(e.data)
+          result += chunk.answer || ''
+          state.result = md.render(result.replace(/<think>[\s\S]*?<\/think>/g, ''))
+          if (chunk.event === 'message_end') {
+            state.status = ''
+          }
+          await nextTick()
+          state.resultRef.scrollTo({
+            top: state.resultRef.scrollHeight,
+            behavior: 'smooth',
+          })
+        } catch (e) {}
+      },
+      onerror(err) {
+        console.error(err)
+        ctrl.abort()
+      },
+      onclose() {
+        state.status = ''
+        console.log('🔚 SSE closed')
+      },
+    })
+  }
+
+  const clean = () => {
+    state.status = ''
+    state.prompt = ''
+    state.speechItems = []
+    state.result = ''
+  }
 </script>
+
+<style>
+  hr {
+    margin: 10px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+</style>
 
 <style scoped>
   .wrap {

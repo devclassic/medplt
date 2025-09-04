@@ -3,7 +3,7 @@ from invoke import task
 
 @task
 def dev(ctx):
-    cmd = "uv run uvicorn main:app --reload"
+    cmd = "uv run uvicorn --reload --host 0.0.0.0 --port 8000 main:app"
     ctx.run(cmd)
 
 
