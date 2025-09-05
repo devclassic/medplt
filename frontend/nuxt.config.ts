@@ -13,4 +13,9 @@ export default defineNuxtConfig({
       BASE_URL: import.meta.env.BASE_URL,
     },
   },
+  vite: {
+    server: {
+      allowedHosts: true,
+    },
+  },
 })
