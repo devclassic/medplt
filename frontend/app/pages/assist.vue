@@ -83,6 +83,10 @@
       content: state.prompt,
     })
     await nextTick()
+    state.resultRef.scrollTo({
+      top: state.resultRef.scrollHeight,
+      behavior: 'smooth',
+    })
     const msg = reactive({
       content: '',
     })
@@ -133,7 +137,34 @@
   }
 </script>
 
-<style></style>
+<style>
+  hr {
+    margin: 10px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+</style>
 
 <style scoped>
   .wrap {

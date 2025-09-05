@@ -15,7 +15,7 @@ router = APIRouter(prefix="/asr")
 
 @router.post("")
 async def asr(file: UploadFile = File()):
-    basepath = "public/upload/asr/"
+    basepath = "public/uploads/asr/"
     if not os.path.exists(basepath):
         os.makedirs(basepath)
     ext = os.path.splitext(file.filename)[1]

@@ -60,10 +60,8 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="state.showRename = false">取消</el-button>
-        <el-button type="primary" @click="rename">确定</el-button>
-      </div>
+      <el-button @click="state.showRename = false">取消</el-button>
+      <el-button type="primary" @click="rename">确定</el-button>
     </template>
   </el-dialog>
 </template>

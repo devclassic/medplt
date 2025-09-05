@@ -2,20 +2,9 @@
   <div class="wrap">
     <div class="title">辅助影像</div>
     <div class="top-box">
-      <div class="result">
-        <div class="item right">
-          <div class="content">您好，我想让你帮我看看病情，可以吗？</div>
-        </div>
-        <div class="item">
-          <div class="content">
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容，
-            这是测试回答内容这是测试回答内容这是测试回答内容。
-          </div>
+      <div ref="result" class="result">
+        <div v-for="item in state.messages" :class="{ right: item.pos === 'right' }" class="item">
+          <div v-html="item.content" class="content"></div>
         </div>
       </div>
     </div>
@@ -23,35 +12,256 @@
       <div class="input-box">
         <div class="toolbar">
           <div class="left">
-            <div class="upimage"></div>
-            <div class="updicom"></div>
+            <input
+              @change="imgFileChange"
+              ref="imgfile"
+              type="file"
+              accept="image/*"
+              multiple
+              class="file" />
+            <input @change="dcmFileChange" ref="dcmfile" type="file" multiple class="file" />
+            <div @click="state.imgFileRef.click()" class="upimage"></div>
+            <div @click="state.dcmFileRef.click()" class="updicom"></div>
           </div>
           <div class="right">
-            <div class="status">正在录音...</div>
-            <div class="speech"></div>
-            <div class="clean"></div>
+            <div class="status">{{ state.status }}</div>
+            <div @click="asr" class="speech"></div>
+            <div @click="clean" class="clean"></div>
           </div>
         </div>
-        <textarea placeholder="请上传片子并输入相关问题" class="input"></textarea>
+        <textarea
+          v-model="state.prompt"
+          @keydown.prevent.enter="submit"
+          placeholder="请上传片子并输入相关问题"
+          class="input"></textarea>
         <div class="bottom">
-          <div class="submit"></div>
+          <div @click="submit" class="submit"></div>
         </div>
       </div>
       <div class="image-box">
         <div class="images">
-          <img src="@/assets/images/img1.png" class="img" />
-          <img src="@/assets/images/img2.png" class="img" />
-          <img src="@/assets/images/img3.png" class="img" />
-          <img src="@/assets/images/img1.png" class="img" />
-          <img src="@/assets/images/img2.png" class="img" />
-          <img src="@/assets/images/img3.png" class="img" />
+          <img v-for="item of state.images" @click="preview(item)" :src="item" class="img" />
         </div>
       </div>
     </div>
   </div>
+
+  <el-dialog v-model="state.showPreview" title="图像预览" width="800">
+    <img :src="state.previewUrl" class="preview" />
+  </el-dialog>
 </template>
 
-<script setup></script>
+<script setup>
+  import { fetchEventSource } from '@microsoft/fetch-event-source'
+  import markdownit from 'markdown-it'
+  const http = useAxios()
+
+  const state = reactive({
+    messages: [],
+    prompt: '',
+    showPreview: false,
+    previewUrl: '',
+    images: [],
+    imgs: [],
+    status: '',
+    history: [
+      {
+        role: 'system',
+        content: [{ type: 'text', text: '你是端点科技专业医疗影像助手' }],
+      },
+    ],
+    imgFileRef: useTemplateRef('imgfile'),
+    dcmFileRef: useTemplateRef('dcmfile'),
+    resultRef: useTemplateRef('result'),
+  })
+
+  const imgFileChange = e => {
+    state.images = []
+    const files = e.target.files
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+      state.images.push(URL.createObjectURL(file))
+    }
+  }
+
+  const dcmFileChange = async e => {
+    state.imgFileRef.value = null
+    state.status = '上传DCM影像中...'
+    state.images = []
+    const formData = new FormData()
+    const files = e.target.files
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+      formData.append('files', file)
+    }
+    const res = await http.post('/api/client/image/updcm', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    if (res.data.success) {
+      state.images = res.data.data.images.map(item => config.public.BASE_URL + item)
+      state.imgs = res.data.data.imgs
+    } else {
+      ElMessage.error(res.data.message)
+    }
+    state.status = ''
+  }
+
+  let recording = false
+  const recorder = useRecorder()
+  const asr = async () => {
+    if (!recording) {
+      state.status = recorder.start(
+        () => {
+          state.status = '录音中...'
+          recording = true
+        },
+        () => {
+          state.status = '录音失败...'
+          recording = false
+        }
+      )
+    } else {
+      state.status = '正在识别...'
+      const res = await recorder.getResult()
+      state.prompt = res.data[0].text
+      state.status = ''
+      recording = false
+    }
+  }
+
+  const preview = url => {
+    state.previewUrl = url
+    state.showPreview = true
+  }
+
+  const clean = () => {
+    state.messages = []
+    state.images = []
+    state.imgs = []
+    state.status = ''
+    state.prompt = ''
+    state.history = [
+      {
+        role: 'system',
+        content: [{ type: 'text', text: '你是端点科技专业医疗影像助手' }],
+      },
+    ]
+  }
+
+  const md = markdownit()
+  const config = useRuntimeConfig()
+  const submit = async () => {
+    if (state.images.length === 0) {
+      ElMessage.error('请上传影像')
+      return
+    }
+    if (!state.prompt) {
+      ElMessage.error('请输入提示词')
+      return
+    }
+    state.messages.push({
+      pos: 'right',
+      content: state.prompt,
+    })
+    await nextTick()
+    state.resultRef.scrollTo({
+      top: state.resultRef.scrollHeight,
+      behavior: 'smooth',
+    })
+    const msg = reactive({
+      content: '',
+    })
+    state.messages.push(msg)
+    state.status = '上传影像中...'
+    const files = state.imgFileRef.files
+    if (files.length > 0) {
+      const formData = new FormData()
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        formData.append('files', file)
+      }
+      const res = await http.post('/api/client/image/upimg', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      state.status = '影像上传完成...'
+      state.imgs = res.data.data
+    }
+    state.status = '正在处理...'
+    const url = config.public.BASE_URL + '/api/client/image'
+    const ctrl = new AbortController()
+    let result = ''
+    await fetchEventSource(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: state.prompt, history: state.history, imgs: state.imgs }),
+      signal: ctrl.signal,
+      async onopen(e) {
+        if (e.ok && e.headers.get('content-type')?.includes('text/event-stream')) {
+          state.prompt = ''
+          console.log('✅ SSE opened')
+        } else {
+          throw new Error(await e.text())
+        }
+      },
+      async onmessage(e) {
+        try {
+          const chunk = JSON.parse(e.data)
+          result += chunk.token || ''
+          msg.content = md.render(result.replace(/<think>[\s\S]*?<\/think>/g, ''))
+          if (chunk.event === 'message_end') {
+            state.status = ''
+          }
+          await nextTick()
+          state.resultRef.scrollTo({
+            top: state.resultRef.scrollHeight,
+            behavior: 'smooth',
+          })
+        } catch (e) {}
+      },
+      onerror(err) {
+        console.error(err)
+        ctrl.abort()
+      },
+      onclose() {
+        state.status = ''
+        console.log('🔚 SSE closed')
+      },
+    })
+  }
+</script>
+
+<style>
+  hr {
+    margin: 10px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    text-align: left;
+  }
+</style>
 
 <style scoped>
   .wrap {
@@ -159,6 +369,12 @@
     align-items: center;
   }
 
+  .file {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
   .upimage {
     width: 100px;
     height: 36px;
@@ -220,5 +436,9 @@
 
   .submit:hover {
     background-image: url('@/assets/images/submit-active.png');
+  }
+
+  .preview {
+    width: 100%;
   }
 </style>
