@@ -8,6 +8,12 @@ def dev(ctx):
 
 
 @task
+def build(ctx):
+    cmd = "pyinstaller -F --clean --noupx --collect-all funasr --collect-all transformers main.py"
+    ctx.run(cmd)
+
+
+@task
 def run(ctx):
     cmd = "uv run main.py"
     ctx.run(cmd)
