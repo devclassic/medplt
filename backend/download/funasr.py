@@ -10,4 +10,7 @@ model_repos = {
 
 # 下载所有模型到本地目录（如./local_models）
 for model_name, repo_id in model_repos.items():
-    snapshot_download(repo_id, cache_dir=f"./models/funasr/{model_name}")
+    snapshot_download(
+        repo_id,
+        local_dir=f"./models/funasr/{model_name}",
+    )

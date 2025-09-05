@@ -18,7 +18,7 @@
             <span class="icon icon-check"></span>
             <span>辅助质控</span>
           </NuxtLink>
-          <NuxtLink to="/chat" class="menu-item" :class="{ active: route.path === '/chat' }">
+          <NuxtLink to="/assist" class="menu-item" :class="{ active: route.path === '/assist' }">
             <span class="icon icon-chat"></span>
             <span>辅助诊疗</span>
           </NuxtLink>

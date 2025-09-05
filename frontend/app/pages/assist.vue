@@ -1,31 +1,27 @@
 <template>
   <div class="wrap">
-    <div class="title">辅助质控</div>
+    <div class="title">辅助诊疗</div>
     <div class="top-box">
-      <div ref="result" v-html="state.result" class="result"></div>
+      <div ref="result" class="result">
+        <div v-for="item in state.messages" :class="{ right: item.pos === 'right' }" class="item">
+          <div v-html="item.content" class="content"></div>
+        </div>
+      </div>
     </div>
     <div class="bottom-box">
       <div class="input-box">
         <div class="toolbar">
-          <div>
-            <div class="type">
-              <input
-                v-model="state.type"
-                @keydown.prevent.enter="state.contentRef.focus()"
-                type="text"
-                placeholder="请输入质控类型" />
-            </div>
-          </div>
+          <div></div>
           <div class="right">
             <div class="status">{{ state.status }}</div>
+            <div @click="asr" class="speech"></div>
             <div @click="clean" class="clean"></div>
           </div>
         </div>
         <textarea
-          v-model="state.content"
+          v-model="state.prompt"
           @keydown.prevent.enter="submit"
-          ref="content"
-          placeholder="请输入质控内容"
+          placeholder="请输入提示词"
           class="input"></textarea>
         <div class="bottom">
           <div @click="submit" class="submit"></div>
@@ -41,42 +37,69 @@
 
   const state = reactive({
     status: '',
-    type: '',
-    content: '',
-    result: '',
+    prompt: '',
+    messages: [],
     resultRef: useTemplateRef('result'),
-    contentRef: useTemplateRef('content'),
   })
+
+  let recording = false
+  const recorder = useRecorder()
+  const asr = async () => {
+    if (!recording) {
+      state.status = recorder.start(
+        () => {
+          state.status = '录音中...'
+          recording = true
+        },
+        () => {
+          state.status = '录音失败...'
+          recording = false
+        }
+      )
+    } else {
+      state.status = '正在识别...'
+      const res = await recorder.getResult()
+      state.prompt = res.data[0].text
+      state.status = ''
+      recording = false
+    }
+  }
 
   const clean = () => {
     state.status = ''
-    state.type = ''
-    state.content = ''
-    state.result = ''
+    state.prompt = ''
+    state.messages = []
   }
 
   const md = markdownit()
   const config = useRuntimeConfig()
   const submit = async () => {
-    if (!state.type) {
-      ElMessage.error('请输入质控类型')
+    if (!state.prompt) {
+      ElMessage.error('请输入提示词')
       return
     }
-    if (!state.content) {
-      ElMessage.error('请输入质控内容')
-      return
-    }
-    state.status = '正在运行质控...'
-    const url = config.public.BASE_URL + '/api/client/check'
+    state.messages.push({
+      pos: 'right',
+      content: state.prompt,
+    })
+    await nextTick()
+    const msg = reactive({
+      content: '',
+    })
+    state.messages.push(msg)
+
+    state.status = '生成中...'
+    const url = config.public.BASE_URL + '/api/client/assist'
     const ctrl = new AbortController()
     let result = ''
     await fetchEventSource(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: state.type, content: state.content }),
+      body: JSON.stringify({ prompt: state.prompt }),
       signal: ctrl.signal,
       async onopen(e) {
         if (e.ok && e.headers.get('content-type')?.includes('text/event-stream')) {
+          state.prompt = ''
           console.log('✅ SSE opened')
         } else {
           throw new Error(await e.text())
@@ -85,9 +108,10 @@
       async onmessage(e) {
         try {
           const chunk = JSON.parse(e.data)
-          result += chunk.data.text || ''
-          state.result = md.render(result.replace(/<think>[\s\S]*?<\/think>/g, ''))
-          if (chunk.event === 'workflow_finished') {
+          console.log(chunk)
+          result += chunk.answer || ''
+          msg.content = md.render(result.replace(/<think>[\s\S]*?<\/think>/g, ''))
+          if (chunk.event === 'message_end') {
             state.status = ''
           }
           await nextTick()
@@ -109,34 +133,7 @@
   }
 </script>
 
-<style>
-  hr {
-    margin: 10px 0;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-  }
-
-  table,
-  th,
-  td {
-    border: 1px solid #ccc;
-  }
-
-  th {
-    background-color: #f2f2f2;
-    padding: 10px;
-    text-align: left;
-  }
-
-  td {
-    padding: 10px;
-    text-align: left;
-  }
-</style>
+<style></style>
 
 <style scoped>
   .wrap {
@@ -170,6 +167,21 @@
     overflow: auto;
   }
 
+  .result .item {
+    margin-bottom: 10px;
+    display: flex;
+  }
+
+  .result .item.right {
+    justify-content: end;
+  }
+
+  .result .item.right .content {
+    background: #f5f5f5;
+    padding: 15px 20px;
+    border-radius: 10px;
+  }
+
   .bottom-box {
     height: 300px;
     border-radius: 20px;
@@ -190,6 +202,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 36px;
   }
 
   .toolbar .right {
@@ -201,21 +214,12 @@
     color: #cccccc;
   }
 
-  .type {
-    width: 154px;
-    height: 36px;
-    background: url('@/assets/images/check-type.png') no-repeat center center / 100% 100%;
-    position: relative;
-  }
-
-  .type input {
-    width: 105px;
-    height: 20px;
-    border: none;
-    outline: none;
-    position: absolute;
-    top: 8px;
-    right: 10px;
+  .speech {
+    width: 16px;
+    height: 16px;
+    background: url('@/assets/images/icon-speech.png') no-repeat center center / 100% 100%;
+    cursor: pointer;
+    margin-left: 10px;
   }
 
   .clean {

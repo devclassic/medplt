@@ -9,7 +9,7 @@
         <NuxtLink to="/check">
           <img src="@/assets/images/index-link-2.png" />
         </NuxtLink>
-        <NuxtLink to="/chat">
+        <NuxtLink to="/assist">
           <img src="@/assets/images/index-link-3.png" />
         </NuxtLink>
         <NuxtLink to="/image">

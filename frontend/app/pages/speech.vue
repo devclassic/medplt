@@ -30,9 +30,11 @@
             <div @click="clean" class="clean"></div>
           </div>
         </div>
-        <textarea placeholder="请输入对话生成提示词，对话内容为<对话>" class="input">{{
-          state.prompt
-        }}</textarea>
+        <textarea
+          v-model="state.prompt"
+          @keydown.prevent.enter="submit"
+          placeholder="请输入对话生成提示词，对话内容为<对话>"
+          class="input"></textarea>
         <div class="bottom">
           <div @click="submit" class="submit"></div>
         </div>
@@ -53,7 +55,7 @@
 
   <el-dialog v-model="state.showRename" title="命名说话人" width="500">
     <el-form label-width="auto">
-      <el-form-item v-for="(name, i) in state.names" :label="name" :key="i">
+      <el-form-item v-for="(name, i) in state.names" :label="name">
         <el-input v-model="state.nameValues[i]" />
       </el-form-item>
     </el-form>
