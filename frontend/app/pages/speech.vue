@@ -26,7 +26,7 @@
           </div>
           <div class="right">
             <div class="status">{{ state.status }}</div>
-            <div @click="asr" class="speech"></div>
+            <div @click="asr" :class="{ active: recording }" class="speech"></div>
             <div @click="clean" class="clean"></div>
           </div>
         </div>
@@ -100,22 +100,42 @@
     state.showType = false
   }
 
-  let recording = false
+  const stopwatch = useStopwatch()
+  const formatTime = ms => {
+    const pad = (n, len = 2) => String(n).padStart(len, '0')
+    const h = pad(Math.floor(ms / 3600000))
+    const m = pad(Math.floor((ms % 3600000) / 60000))
+    const s = pad(Math.floor((ms % 60000) / 1000))
+    const cent = pad(Math.floor((ms % 1000) / 10)) // 百分之一秒
+    return { h, m, s, cent, str: `${h}:${m}:${s}` }
+  }
+  const display = computed(() => formatTime(stopwatch.elapsed.value))
   const recorder = useRecorder()
+
+  let recording = ref(false)
+  let timer = null
   const asr = async () => {
-    if (!recording) {
+    if (!recording.value) {
       state.status = recorder.start(
         () => {
-          state.status = '录音中...'
-          recording = true
+          stopwatch.start()
+          state.status = `${display.value.str} 录音中...`
+          timer = setInterval(() => {
+            state.status = `${display.value.str} 录音中...`
+          }, 100)
+          recording.value = true
         },
         () => {
+          clearInterval(timer)
+          stopwatch.reset()
           state.status = '录音失败...'
-          recording = false
+          recording.value = false
         }
       )
     } else {
       state.status = '生成对话...'
+      clearInterval(timer)
+      stopwatch.reset()
       const res = await recorder.getResult()
       const items = res.data[0]?.sentence_info
       if (items) {
@@ -126,7 +146,7 @@
         }))
       }
       state.status = ''
-      recording = false
+      recording.value = false
     }
   }
 
@@ -355,6 +375,12 @@
     background: url('@/assets/images/icon-speech.png') no-repeat center center / 100% 100%;
     cursor: pointer;
     margin-left: 10px;
+  }
+
+  .speech.active {
+    width: 23px;
+    height: 23px;
+    background-image: url('@/assets/images/icon-speech-active.png');
   }
 
   .clean {
