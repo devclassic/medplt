@@ -29,14 +29,20 @@
               <img src="@/assets/images/login-code.png" />
             </div>
           </div>
-          <div class="submit">登录</div>
+          <div @click="login" class="submit">登录</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+  const router = useRouter()
+
+  const login = () => {
+    router.push('/')
+  }
+</script>
 
 <style scoped>
   .box {
