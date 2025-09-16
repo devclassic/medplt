@@ -1,21 +1,26 @@
 import Recorder from 'js-audio-recorder'
 import { useAxios } from '@/composables/useAxios'
 
-const recorder = new Recorder({
-  sampleBits: 16,
-  sampleRate: 16000,
-  numChannels: 1,
-})
+let recorder: any = null
+
+const initRecorder = () => {
+  recorder = new Recorder({
+    sampleBits: 16,
+    sampleRate: 16000,
+    numChannels: 1,
+  })
+}
 
 export const useRecorder = () => {
   return {
     start(ok = () => {}, err = () => {}) {
+      initRecorder()
       recorder.start().then(
         () => {
           console.log('开始录音')
           ok()
         },
-        error => {
+        (error: any) => {
           console.log('开始录音失败', error)
           err()
         }
