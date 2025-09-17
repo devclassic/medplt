@@ -10,27 +10,27 @@
             <span class="icon icon-home"></span>
             <span>首页</span>
           </NuxtLink>
-          <NuxtLink to="/speech" class="menu-item" :class="{ active: route.path === '/speech' }">
+          <NuxtLink to="/speech" class="menu-item" :class="{ active: path === '/speech' }">
             <span class="icon icon-speech"></span>
             <span>多人语音</span>
           </NuxtLink>
-          <NuxtLink to="/check" class="menu-item" :class="{ active: route.path === '/check' }">
+          <NuxtLink to="/check" class="menu-item" :class="{ active: path === '/check' }">
             <span class="icon icon-check"></span>
             <span>辅助质控</span>
           </NuxtLink>
-          <NuxtLink to="/assist" class="menu-item" :class="{ active: route.path === '/assist' }">
+          <NuxtLink to="/assist" class="menu-item" :class="{ active: path === '/assist' }">
             <span class="icon icon-chat"></span>
             <span>辅助诊疗</span>
           </NuxtLink>
-          <NuxtLink to="/image" class="menu-item" :class="{ active: route.path === '/image' }">
+          <NuxtLink to="/image" class="menu-item" :class="{ active: path === '/image' }">
             <span class="icon icon-image"></span>
             <span>辅助影像</span>
           </NuxtLink>
-          <NuxtLink to="/history" class="menu-item" :class="{ active: route.path === '/history' }">
+          <NuxtLink to="/history" class="menu-item" :class="{ active: path === '/history' }">
             <span class="icon icon-history"></span>
             <span>历史记录</span>
           </NuxtLink>
-          <NuxtLink to="/user" class="menu-item" :class="{ active: route.path === '/user' }">
+          <NuxtLink to="/user" class="menu-item" :class="{ active: path === '/user' }">
             <span class="icon icon-user"></span>
             <span>个人中心</span>
           </NuxtLink>
@@ -51,7 +51,7 @@
 
 <script setup>
   const route = useRoute()
-
+  const path = computed(() => route.path.replace(/\/$/, ''))
   useClientInit()
 </script>
 
