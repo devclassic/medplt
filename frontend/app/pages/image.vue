@@ -210,7 +210,8 @@
       async onmessage(e) {
         try {
           const chunk = JSON.parse(e.data)
-          result += chunk.token || ''
+          console.log(chunk)
+          result += chunk.answer || ''
           msg.content = md.render(result.replace(/<think>[\s\S]*?<\/think>/g, ''))
           if (chunk.event === 'message_end') {
             state.status = ''

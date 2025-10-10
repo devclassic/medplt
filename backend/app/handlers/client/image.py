@@ -4,14 +4,11 @@ from fastapi.responses import StreamingResponse
 import os
 import shutil
 import uuid
-import json
-from ...models.medgemma import Medgemma
 import glob
 import dicom2jpg
-
-
-model = Medgemma()
-model.init()
+from ...utils.http import http
+import mimetypes
+import base64
 
 router = APIRouter(prefix="/image")
 
@@ -23,17 +20,48 @@ async def images(request: Request):
     history = data.get("history", "")
     imgs = data.get("imgs", [])
 
-    messages = history
-    msg = {"role": "user", "content": []}
-    for img in imgs:
-        msg["content"].append({"type": "image", "image": img})
-    msg["content"].append({"type": "text", "text": prompt})
-    messages.append(msg)
+    baseapi = os.getenv("BASE_API")
+    url = f"{baseapi}/files/upload"
+    token = os.getenv("TOKEN_TUXIANGSHIBIE")
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+    data = {"user": "demo"}
 
-    return StreamingResponse(
-        model.generate(messages),
-        media_type="text/event-stream",
-    )
+    pics = []
+    for img in imgs:
+        with open(img, "rb") as f:
+            r = await http.post(
+                url,
+                headers=headers,
+                data=data,
+                files={"file": (os.path.basename(img), f)},
+            )
+            pics.append(r.json()["id"])
+
+    url = f"{baseapi}/chat-messages"
+
+    data = {
+        "inputs": {},
+        "query": prompt,
+        "response_mode": "streaming",
+        "user": "demo",
+        "files": [
+            {
+                "type": "image",
+                "transfer_method": "local_file",
+                "upload_file_id": id,
+            }
+            for id in pics
+        ],
+    }
+
+    async def event_stream():
+        async with http.stream("POST", url, json=data, headers=headers) as res:
+            async for chunk in res.aiter_bytes():
+                yield chunk
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @router.post("/upimg")
