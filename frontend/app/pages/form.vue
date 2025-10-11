@@ -259,11 +259,11 @@
         continue
       }
       const prompt = `<内容>${content}</内容>
-<内容>为${key}，请你优化<内容>中的内容，保持<内容>的完整性，书面性，不要改变<内容>的意思，直接输出优化后结果。`
+<内容>为${key}。
+请扮演一名专业医生，将医患问诊录音内容和口语化叙述转化为标准医学表述，准确提取医患对话中的关键医疗信息，只优化最终结果，不提出意见，保持专业、客观的表述，你需要系统性地优化录音内容，消除所有口语化、模糊和带有语气词的表述，并使用精确、客观的医学术语进行规范记录，最终生成的语句需逻辑严谨、术语规范，符合医疗文书标准。`
       const res = await http.post(url, { prompt })
       const data = res.data.data.answer.replace(/<think>[\s\S]*?<\/think>/g, '')
-      console.log(data)
-      state.form[key] = data
+      state.form[key] = data.trim()
     }
     state.btn3Text = '信息优化'
   }
