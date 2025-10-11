@@ -34,9 +34,14 @@ export const useRecorder = () => {
       this.stop()
       return recorder.getWAVBlob()
     },
-    async getResult() {
-      const blob = this.getBlob()
-      const file = new File([blob], 'audio.wav')
+    async getResult(audio = null) {
+      let file = null
+      if (audio) {
+        file = audio
+      } else {
+        const blob = this.getBlob()
+        file = new File([blob], 'audio.wav')
+      }
       const formData = new FormData()
       formData.append('file', file)
       const http = useAxios()

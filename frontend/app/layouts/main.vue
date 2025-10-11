@@ -14,6 +14,10 @@
             <span class="icon icon-speech"></span>
             <span>多人语音</span>
           </NuxtLink>
+          <NuxtLink to="/form" class="menu-item" :class="{ active: path === '/form' }">
+            <span class="icon icon-form"></span>
+            <span>表单填写</span>
+          </NuxtLink>
           <NuxtLink to="/check" class="menu-item" :class="{ active: path === '/check' }">
             <span class="icon icon-check"></span>
             <span>辅助质控</span>
@@ -134,6 +138,10 @@
     background: url('@/assets/images/side-icon-speech.png') no-repeat center center / 100% 100%;
   }
 
+  .menu-item .icon.icon-form {
+    background: url('@/assets/images/side-icon-form.png') no-repeat center center / 100% 100%;
+  }
+
   .menu-item .icon.icon-check {
     background: url('@/assets/images/side-icon-check.png') no-repeat center center / 100% 100%;
   }
@@ -157,6 +165,10 @@
   .menu-item.active .icon.icon-speech {
     background: url('@/assets/images/side-icon-speech-active.png') no-repeat center center / 100%
       100%;
+  }
+
+  .menu-item.active .icon.icon-form {
+    background: url('@/assets/images/side-icon-form-active.png') no-repeat center center / 100% 100%;
   }
 
   .menu-item.active .icon.icon-check {

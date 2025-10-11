@@ -6,6 +6,8 @@ import uuid
 import shutil
 import anyio
 from ...utils.http import http
+import cn2an
+from icecream import ic
 
 model = Asr()
 model.init()
@@ -23,6 +25,10 @@ async def asr(file: UploadFile = File()):
     with open(filename, "wb") as f:
         shutil.copyfileobj(file.file, f)
     res = await anyio.to_thread.run_sync(model.generate, filename)
+    res[0]["text"] = cn2an.transform(res[0]["text"])
+    for item in res[0]["sentence_info"]:
+        item["text"] = cn2an.transform(item["text"])
+    res[0]["url"] = filename.replace("public/", "/")
     return {"success": True, "message": "语音识别成功", "data": res}
 
 
@@ -49,3 +55,24 @@ async def generate(request: Request):
                 yield chunk
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
+
+
+@router.post("/chat")
+async def chat(request: Request):
+    data = await request.json()
+    prompt = data.get("prompt")
+    baseapi = os.getenv("BASE_API")
+    url = f"{baseapi}/chat-messages"
+    token = os.getenv("TOKEN_DUIHUASHENGCHENG")
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+    data = {
+        "user": "demo",
+        "inputs": {},
+        "query": prompt,
+        "response_mode": "blocking",
+    }
+    res = await http.post(url, json=data, headers=headers)
+    res = res.json()
+    return {"success": True, "message": "生成成功", "data": res}

@@ -7,12 +7,12 @@
     <div class="bottom-box">
       <div class="input-box">
         <div class="toolbar">
-          <div>
+          <div class="left">
             <div @click="state.showType = !state.showType" class="type"></div>
             <div v-show="state.showType" class="type-list">
-              <div @click="typeMR" class="item">
+              <div @click="typeMR(item.content)" v-for="item in state.types" class="item">
                 <div class="icon icon-mr"></div>
-                <div class="text">病历生成</div>
+                <div class="text">{{ item.name }}</div>
               </div>
               <div @click="typeCustom" class="item">
                 <div class="icon icon-custom"></div>
@@ -23,6 +23,7 @@
                 <div class="text">取消</div>
               </div>
             </div>
+            <div @click="showCustomize" class="customize"></div>
           </div>
           <div class="right">
             <div class="status">{{ state.status }}</div>
@@ -41,7 +42,16 @@
       </div>
       <div class="speech-box">
         <div class="toolbar">
-          <div @click="showRename" class="rename"></div>
+          <div class="left">
+            <div @click="showRename" class="rename"></div>
+            <div @click="save" class="save"></div>
+            <input
+              type="file"
+              ref="upaudio"
+              @change="upAudioChnage"
+              style="width: 0; height: 0; opacity: 0" />
+            <div @click="upload" class="upload"></div>
+          </div>
         </div>
         <div class="speech-list">
           <div v-for="item of state.speechItems" class="item">
@@ -64,6 +74,42 @@
       <el-button type="primary" @click="rename">确定</el-button>
     </template>
   </el-dialog>
+
+  <el-dialog v-model="state.showCustomize" title="自定义生成类型" width="600">
+    <el-button @click="showEditType('add')" type="primary" style="margin-bottom: 10px">
+      添加类型
+    </el-button>
+    <el-table :data="state.tableData" stripe border>
+      <el-table-column prop="name" label="类型名称" />
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-button link type="primary" size="small" @click="showEditType('update', scope.row)">
+            修改
+          </el-button>
+          <el-button link type="danger" size="small" @click="deleteType(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <template #footer>
+      <el-button @click="state.showCustomize = false">取消</el-button>
+      <el-button type="primary" @click="state.showCustomize = false">确定</el-button>
+    </template>
+  </el-dialog>
+
+  <el-dialog v-model="state.showEditType" title="添加类型" width="600">
+    <el-form label-width="auto">
+      <el-form-item label="名称">
+        <el-input v-model="state.type.name" />
+      </el-form-item>
+      <el-form-item label="内容">
+        <el-input v-model="state.type.content" type="textarea" :rows="8" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <el-button @click="state.showEditType = false">取消</el-button>
+      <el-button type="primary" @click="editType()">确定</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -80,7 +126,66 @@
     speechItems: [],
     result: '',
     resultRef: useTemplateRef('result'),
+    url: '',
+    upaudio: useTemplateRef('upaudio'),
+    showCustomize: false,
+    tableData: [],
+    showEditType: false,
+    type: {
+      id: '',
+      name: '',
+      content: '',
+    },
+    opened: false,
+    act: '',
+    types: [],
   })
+
+  const http = useAxios()
+
+  const updateTypes = async () => {
+    const res = await http.post('/api/client/types')
+    state.types = res.data.data
+  }
+
+  updateTypes()
+
+  const showCustomize = async () => {
+    const res = await http.post('/api/client/types')
+    state.tableData = res.data.data
+    state.showCustomize = true
+  }
+
+  const showEditType = (act, row) => {
+    if (act === 'add') {
+      state.type.id = ''
+      state.type.name = ''
+      state.type.content = ''
+    } else if (act === 'update') {
+      state.type.id = row.id
+      state.type.name = row.name
+      state.type.content = row.content
+    }
+    state.showEditType = true
+    state.act = act
+  }
+
+  const editType = async () => {
+    if (state.act === 'add') {
+      await http.post('/api/client/types/add', state.type)
+    } else if (state.act === 'update') {
+      await http.post('/api/client/types/update', state.type)
+    }
+    state.showEditType = false
+    showCustomize()
+    updateTypes()
+  }
+
+  const deleteType = async row => {
+    await http.post('/api/client/types/delete', { id: row.id })
+    showCustomize()
+    updateTypes()
+  }
 
   const dialog = () => {
     let text = ''
@@ -90,8 +195,8 @@
     return `<对话>${text}</对话>`
   }
 
-  const typeMR = () => {
-    state.prompt = '请根据<对话>生成一份完整的病例'
+  const typeMR = content => {
+    state.prompt = content
     state.showType = false
   }
 
@@ -116,7 +221,8 @@
   let timer = null
   const asr = async () => {
     if (!recording.value) {
-      state.status = recorder.start(
+      state.status = '开始收音...'
+      recorder.start(
         () => {
           stopwatch.start()
           state.status = `${display.value.str} 录音中...`
@@ -138,6 +244,7 @@
       stopwatch.reset()
       const res = await recorder.getResult()
       const items = res.data[0]?.sentence_info
+      state.url = res.data[0]?.url
       if (items) {
         state.speechItems = items.map(item => ({
           name: `说话人${item.spk}`,
@@ -212,11 +319,48 @@
     })
   }
 
+  const save = () => {
+    if (!state.url) {
+      ElMessage.error('暂未生成录音')
+      return
+    }
+    const a = document.createElement('a')
+    a.target = '_blank'
+    a.href = config.public.BASE_URL + state.url
+    a.download = '录音.wav'
+    a.click()
+  }
+
+  const upAudioChnage = async () => {
+    state.status = '正在处理...'
+    const file = state.upaudio.files[0]
+    if (!file) {
+      ElMessage.error('请选择录音文件')
+      return
+    }
+    const res = await recorder.getResult(file)
+    const items = res.data[0]?.sentence_info
+    state.url = res.data[0]?.url
+    if (items) {
+      state.speechItems = items.map(item => ({
+        name: `说话人${item.spk}`,
+        spk: item.spk,
+        text: item.text,
+      }))
+    }
+    state.status = ''
+  }
+
+  const upload = () => {
+    state.upaudio.click()
+  }
+
   const clean = () => {
     state.status = ''
     state.prompt = ''
     state.speechItems = []
     state.result = ''
+    state.url = ''
   }
 </script>
 
@@ -312,6 +456,11 @@
     align-items: center;
   }
 
+  .toolbar .left {
+    display: flex;
+    align-items: center;
+  }
+
   .type {
     width: 106px;
     height: 36px;
@@ -320,7 +469,7 @@
   }
 
   .type-list {
-    margin-top: 5px;
+    transform: translate(0, 65%);
     position: fixed;
     border: 1px solid #ebebeb;
     border-radius: 10px;
@@ -358,11 +507,35 @@
     background: url('@/assets/images/icon-clean.png') no-repeat center center / 100% 100%;
   }
 
+  .customize {
+    width: 106px;
+    height: 36px;
+    background: url('@/assets/images/customize.png') no-repeat center center / 100% 100%;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
   .rename {
     width: 122px;
     height: 36px;
     background: url('@/assets/images/speech-rename.png') no-repeat center center / 100% 100%;
     cursor: pointer;
+  }
+
+  .save {
+    width: 106px;
+    height: 36px;
+    background: url('@/assets/images/save-audio.png') no-repeat center center / 100% 100%;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .upload {
+    width: 106px;
+    height: 36px;
+    background: url('@/assets/images/up-audio.png') no-repeat center center / 100% 100%;
+    cursor: pointer;
+    margin-left: 10px;
   }
 
   .status {
