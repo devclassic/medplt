@@ -1,1 +1,0 @@
-import{Q as a,k as t}from"./EwCbqKW-.js";const u="update:modelValue",i="change",N="input",T=({from:s,replacement:o,scope:r,version:c,ref:n,type:E="API"},e)=>{a(()=>t(e),p=>{},{immediate:!0})};export{i as C,N as I,u as U,T as u};
