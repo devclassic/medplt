@@ -30,6 +30,14 @@
             <span class="icon icon-image"></span>
             <span>辅助影像</span>
           </NuxtLink>
+          <NuxtLink to="/img" class="menu-item" :class="{ active: path === '/img' }">
+            <span class="icon icon-img"></span>
+            <span>图像分析</span>
+          </NuxtLink>
+          <NuxtLink to="/file" class="menu-item" :class="{ active: path === '/file' }">
+            <span class="icon icon-file"></span>
+            <span>文档分析</span>
+          </NuxtLink>
           <NuxtLink to="/history" class="menu-item" :class="{ active: path === '/history' }">
             <span class="icon icon-history"></span>
             <span>历史记录</span>
@@ -154,6 +162,14 @@
     background: url('@/assets/images/side-icon-image.png') no-repeat center center / 100% 100%;
   }
 
+  .menu-item .icon.icon-img {
+    background: url('@/assets/images/side-icon-img.png') no-repeat center center / 100% 100%;
+  }
+
+  .menu-item .icon.icon-file {
+    background: url('@/assets/images/side-icon-file.png') no-repeat center center / 100% 100%;
+  }
+
   .menu-item .icon.icon-history {
     background: url('@/assets/images/side-icon-history.png') no-repeat center center / 100% 100%;
   }
@@ -183,6 +199,14 @@
   .menu-item.active .icon.icon-image {
     background: url('@/assets/images/side-icon-image-active.png') no-repeat center center / 100%
       100%;
+  }
+
+  .menu-item.active .icon.icon-img {
+    background: url('@/assets/images/side-icon-img-active.png') no-repeat center center / 100% 100%;
+  }
+
+  .menu-item.active .icon.icon-file {
+    background: url('@/assets/images/side-icon-file-active.png') no-repeat center center / 100% 100%;
   }
 
   .menu-item.active .icon.icon-history {
