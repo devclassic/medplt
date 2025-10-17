@@ -9,7 +9,7 @@ def dev(ctx):
 
 @task
 def build(ctx):
-    cmd = "pyinstaller -F --clean --noupx --collect-all funasr --collect-all transformers main.py"
+    cmd = "pyinstaller -F --clean --noupx --collect-all funasr --collect-all transformers --collect-all tortoise --copy-metadata tortoise-orm main.py"
     ctx.run(cmd)
 
 
