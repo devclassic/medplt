@@ -29,6 +29,9 @@ importers:
       element-plus:
         specifier: ^2.11.4
         version: 2.11.4(vue@3.5.22(typescript@5.9.2))
+      hotkeys-js:
+        specifier: ^3.13.15
+        version: 3.13.15
       js-audio-recorder:
         specifier: ^1.0.7
         version: 1.0.7
@@ -1979,6 +1982,9 @@ packages:
 
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
+
+  hotkeys-js@3.13.15:
+    resolution: {integrity: sha512-gHh8a/cPTCpanraePpjRxyIlxDFrIhYqjuh01UHWEwDpglJKCnvLW8kqSx5gQtOuSsJogNZXLhOdbSExpgUiqg==}
 
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
@@ -5600,6 +5606,8 @@ snapshots:
       function-bind: 1.1.2
 
   hookable@5.5.3: {}
+
+  hotkeys-js@3.13.15: {}
 
   http-errors@2.0.0:
     dependencies:

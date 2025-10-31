@@ -17,6 +17,7 @@
     "@vueuse/nuxt": "^13.9.0",
     "axios": "^1.12.2",
     "element-plus": "^2.11.4",
+    "hotkeys-js": "^3.13.15",
     "js-audio-recorder": "^1.0.7",
     "markdown-it": "^14.1.0",
     "nuxt": "^4.1.3",

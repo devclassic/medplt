@@ -18,15 +18,27 @@
             <span class="icon icon-form"></span>
             <span>表单填写</span>
           </NuxtLink>
-          <NuxtLink to="/check" class="menu-item" :class="{ active: path === '/check' }">
+          <NuxtLink
+            v-if="state.showMenu"
+            to="/check"
+            class="menu-item"
+            :class="{ active: path === '/check' }">
             <span class="icon icon-check"></span>
             <span>辅助质控</span>
           </NuxtLink>
-          <NuxtLink to="/assist" class="menu-item" :class="{ active: path === '/assist' }">
+          <NuxtLink
+            v-if="state.showMenu"
+            to="/assist"
+            class="menu-item"
+            :class="{ active: path === '/assist' }">
             <span class="icon icon-chat"></span>
             <span>辅助诊疗</span>
           </NuxtLink>
-          <NuxtLink to="/image" class="menu-item" :class="{ active: path === '/image' }">
+          <NuxtLink
+            v-if="state.showMenu"
+            to="/image"
+            class="menu-item"
+            :class="{ active: path === '/image' }">
             <span class="icon icon-image"></span>
             <span>辅助影像</span>
           </NuxtLink>
@@ -62,8 +74,24 @@
 </template>
 
 <script setup>
+  import hotkeys from 'hotkeys-js'
+
+  const state = reactive({
+    showMenu: false,
+  })
+
+  onMounted(() => {
+    state.showMenu = localStorage.getItem('showMenu') === 'true'
+    hotkeys('alt+h', () => {
+      const show = !state.showMenu
+      state.showMenu = show
+      localStorage.setItem('showMenu', show)
+    })
+  })
+
   const route = useRoute()
   const path = computed(() => route.path.replace(/\/$/, ''))
+
   useClientInit()
 </script>
 
